@@ -3,7 +3,7 @@ import { CreatePostProjectDto } from './dto/create-post-project.dto';
 import { UpdatePostProjectDto } from './dto/update-post-project.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostProject } from './entities/post-project.entity';
-import { MoreThan, Repository } from 'typeorm';
+import { Between, MoreThan, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/rbac/enums/role.enum';
 import { PostProjectConstants } from './constants/post.constant';
@@ -15,6 +15,57 @@ export class PostProjectService {
     private readonly userService: UsersService
 
   ) { }
+  async countNewProjectsToday(): Promise<number> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const count = await this.postProjectRepository.count({
+      where: {
+        // createdAt: MoreThan(today),
+      },
+    });
+    return count;
+  }
+
+  async countNewProjectsLast7Days(): Promise<number> {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const count = await this.postProjectRepository.count({
+      where: {
+        // createdAt: Between(sevenDaysAgo, new Date()),
+      },
+    });
+    return count;
+  }
+  // Thống kê số lượng dự án theo tháng trong năm hiện tại
+  async countProjectsByMonth(year: number): Promise<any> {
+    const startOfYear = new Date(year, 0, 1); // 1 January
+    const endOfYear = new Date(year + 1, 0, 1); // 1 January next year
+
+    const projects = await this.postProjectRepository
+      .createQueryBuilder('postproject')
+      .select('EXTRACT(MONTH FROM postproject.createdAt)', 'month')
+      .addSelect('COUNT(*)', 'count')
+      .where('postproject.createdAt BETWEEN :start AND :end', {
+        start: startOfYear,
+        end: endOfYear,
+      })
+      .groupBy('month')
+      .orderBy('month', 'ASC')
+      .getRawMany();
+
+    return projects;
+  }
+
+  async countNewProjectsLast30Days(): Promise<number> {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const count = await this.postProjectRepository.count({
+      where: {
+        // createdAt: Between(thirtyDaysAgo, new Date()),
+      },
+    });
+    return count;
+  }
 
   async createPostProject(userId, createPostProjectDto: CreatePostProjectDto) {
     const objResponse = {

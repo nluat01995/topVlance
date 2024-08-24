@@ -1,10 +1,10 @@
 import { PaymentMethod } from "src/payment-method/entities/payment-method.entity"
 import { User } from "src/users/entities/user.entity"
 import { WorkForm } from "src/work-form/entities/work-form.entity"
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({ name: 'postProject' })
-export class PostProject {
+export class PostProject extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 

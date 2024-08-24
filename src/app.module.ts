@@ -40,14 +40,15 @@ import { SkillsModule } from './skills/skills.module';
         PostProject,
         PaymentMethod,
         WorkForm
+
       ],
-      autoLoadEntities: false,
-      synchronize: false,
+      autoLoadEntities: true,
+      synchronize: true,
       logging: true,
       migrations: ['src/migration/*.ts'],
 
     }),
-    AuthModule, UsersModule, CategoryModule, SubCategoryModule, PaymentMethodModule, WorkFormModule, PostProjectModule, SkillsModule],
+    AuthModule, UsersModule, CategoryModule, SubCategoryModule, PostProjectModule, SkillsModule],
   controllers: [AppController],
   providers: [
     AppService,

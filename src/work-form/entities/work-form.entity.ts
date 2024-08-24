@@ -7,11 +7,8 @@ export class WorkForm extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({
-        enum: WorkType,
-        default: WorkType.ONLINE
-    })
-    typeForm: WorkType
+    @Column()
+    typeForm: string
 
     @OneToMany(() => PostProject, postProject => postProject.workForm)
     postProjects: PostProject[]

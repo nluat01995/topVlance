@@ -1,21 +1,18 @@
+import { PayType } from "@entities/enums/paymentType.enum";
 import { PostProject } from "src/post-project/entities/post-project.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'paymentMethod' })
 export class PaymentMethod {
     @PrimaryGeneratedColumn()
-    id: number
-    @Column({
-        type: 'enum',
-        enum: ['PAY_HOUR', 'PAY_PROJECT', 'PAY_MONTH'],
-        default: 'PAY_PROJECT'
-    })
-    payment: string
+    id: number;
 
     @Column()
-    description: string
+    payment: string; // Sử dụng kiểu enum chính xác
 
-    @OneToMany(() => PostProject, postProject => postProject.payment)
-    postProjects: PostProject[]
+    @Column()
+    description: string;
 
+    @OneToMany(() => PostProject, postProject => postProject.payment) // Sửa lại tên thuộc tính quan hệ
+    postProjects: PostProject[];
 }

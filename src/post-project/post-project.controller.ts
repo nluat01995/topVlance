@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Query } from '@nestjs/common';
 import { PostProjectService } from './post-project.service';
 import { CreatePostProjectDto } from './dto/create-post-project.dto';
 import { UpdatePostProjectDto } from './dto/update-post-project.dto';
@@ -17,6 +17,28 @@ export class PostProjectController {
   @Post()
   async post(@Req() req, @Body() createPostProjectDto: CreatePostProjectDto) {
     return this.postProjectService.createPostProject(req.userId, createPostProjectDto)
+  }
+
+  @Get('count/today')
+  async getCountToday() {
+    return this.postProjectService.countNewProjectsToday();
+  }
+
+  @Get('count/last-7-days')
+  async getCountLast7Days() {
+    return this.postProjectService.countNewProjectsLast7Days();
+  }
+
+  @Get('count/last-30-days')
+  async getCountLast30Days() {
+    return this.postProjectService.countNewProjectsLast30Days();
+  }
+  @Get('count/by-month')
+  async getCountByMonth(@Query('year') year: number) {
+    if (!year) {
+      throw new Error('Year parameter is required');
+    }
+    return this.postProjectService.countProjectsByMonth(year);
   }
 
 }
