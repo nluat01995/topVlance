@@ -13,6 +13,13 @@ import { SubCategory } from '@entities/sub-category.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './rbac/guards/roles.guard';
 import { JwtAuthGuard } from './rbac/guards/auth.guard';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
+import { WorkFormModule } from './work-form/work-form.module';
+import { PostProjectModule } from './post-project/post-project.module';
+import { PostProject } from './post-project/entities/post-project.entity';
+import { PaymentMethod } from './payment-method/entities/payment-method.entity';
+import { WorkForm } from './work-form/entities/work-form.entity';
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   imports: [
@@ -29,7 +36,10 @@ import { JwtAuthGuard } from './rbac/guards/auth.guard';
       database: process.env.DB_DATABASE,
       entities: [
         User, Category,
-        SubCategory
+        SubCategory,
+        PostProject,
+        PaymentMethod,
+        WorkForm
       ],
       autoLoadEntities: false,
       synchronize: false,
@@ -37,7 +47,7 @@ import { JwtAuthGuard } from './rbac/guards/auth.guard';
       migrations: ['src/migration/*.ts'],
 
     }),
-    AuthModule, UsersModule, CategoryModule, SubCategoryModule],
+    AuthModule, UsersModule, CategoryModule, SubCategoryModule, PaymentMethodModule, WorkFormModule, PostProjectModule, SkillsModule],
   controllers: [AppController],
   providers: [
     AppService,

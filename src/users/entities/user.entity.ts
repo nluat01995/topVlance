@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'src/rbac/enums/role.enum';
 import { BaseEntity } from '@entities/baseEntity/common.entities';
+import { PostProject } from 'src/post-project/entities/post-project.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,4 +43,7 @@ export class User extends BaseEntity {
       this.password = await bcrypt.hash(this.password, 10);
     }
   }
+  @OneToMany(() => PostProject, postProject => postProject.user)
+  projects: PostProject[]
+
 }

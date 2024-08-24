@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { Roles } from 'src/rbac/roles.decorator';
+import { Public, Roles } from 'src/rbac/roles.decorator';
 import { RolesGuard } from 'src/rbac/guards/roles.guard';
 import { JwtAuthGuard } from 'src/rbac/guards/auth.guard';
 import { Role } from 'src/rbac/enums/role.enum';
@@ -13,11 +13,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Post('signIn')
+  @Public()
   signIn(@Body() createUserDto: CreateUserDto) {
     return this.authService.login(createUserDto);
   }
 
   @Post('signUp')
+  @Public()
   signUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
