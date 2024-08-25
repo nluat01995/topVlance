@@ -73,6 +73,8 @@ export class PostProjectService {
       message: PostProjectConstants.CREATE_SUCCESS.MESSAGE
     }
     try {
+      console.log(createPostProjectDto);
+
       const user = await this.userService.findOne(userId);
       const newProject = this.postProjectRepository.create({
         ...createPostProjectDto,
@@ -99,7 +101,7 @@ export class PostProjectService {
       const projectList = (await this.postProjectRepository.find({
         where: whereCondition,
         order: { id: 'ASC' },
-        take: limit
+        take: limit,
       }));
       const newNextId = projectList.length > 0 ? projectList[projectList.length - 1].id : null;
 
@@ -118,5 +120,13 @@ export class PostProjectService {
     } catch (error) {
 
     }
+  }
+  async getProjectFindOne(id) {
+    return await this.postProjectRepository.findOne({
+      where: {
+        id
+      },
+      relations: ['user', 'bids']
+    })
   }
 }

@@ -14,16 +14,16 @@ export class BudgetDto {
 export class CreatePostProjectDto {
     @IsNumber()
     @ApiPropertyOptional()
-    Id_project: number
+    id_project: number
 
-    @IsDate()
+    @IsString()
+
     @ApiPropertyOptional()
 
     startTime: Date
 
-    @IsDate()
     @ApiPropertyOptional()
-
+    @IsString()
     expireTime: Date
 
     @IsNumber()

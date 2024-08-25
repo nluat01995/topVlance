@@ -16,7 +16,20 @@ export class PostProjectController {
   @Roles(Role.FREELANCER)
   @Post()
   async post(@Req() req, @Body() createPostProjectDto: CreatePostProjectDto) {
-    return this.postProjectService.createPostProject(req.userId, createPostProjectDto)
+    const userId = _.get(req, 'user.userId', null)
+    return this.postProjectService.createPostProject(userId, createPostProjectDto)
+  }
+  @Get()
+  @UseGuards(RolesGuard, JwtAuthGuard)
+  @Roles(Role.FREELANCER)
+  async getProject(@Query('limit') limit = 10, @Query('nextId') nextId = null) {
+    return await this.postProjectService.getProjectList(limit, nextId)
+  }
+  @Get(':id')
+  @UseGuards(RolesGuard, JwtAuthGuard)
+  @Roles(Role.FREELANCER)
+  async getProjectByOne(@Param('id') id: string) {
+    return await this.postProjectService.getProjectFindOne(+id)
   }
 
   @Get('count/today')

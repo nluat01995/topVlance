@@ -1,12 +1,18 @@
 import { Controller, Post, Get, Param, Body, Patch, Delete, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BidService } from './bids.service';
+import { JwtAuthGuard } from 'src/rbac/guards/auth.guard';
+import { RolesGuard } from 'src/rbac/guards/roles.guard';
+import { Roles } from 'src/rbac/roles.decorator';
+import { Role } from 'src/rbac/enums/role.enum';
 
 @Controller('posts/:postId/bids')
 export class BidController {
   constructor(private readonly bidService: BidService) { }
 
   @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.FREELANCER)
   async createBid(
     @Param('postId') postId: number,
     @Body('userId') userId: number,
@@ -32,6 +38,8 @@ export class BidController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.FREELANCER)
   async getBidsForPost(@Param('postId') postId: number) {
     return this.bidService.getBidsForPost(postId);
   }
