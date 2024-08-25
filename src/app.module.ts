@@ -23,6 +23,8 @@ import { TestModule } from './test/test.module';
 import { BidsModule } from './bids/bids.module';
 import { Bid } from './bids/entities/bid.entity';
 import { RolesGuard } from './rbac/guards/roles.guard';
+import { Skill } from './skills/entities/skill.entity'; // Adjust the path as necessary
+
 
 @Module({
   imports: [
@@ -43,7 +45,7 @@ import { RolesGuard } from './rbac/guards/roles.guard';
         PostProject,
         PaymentMethod,
         WorkForm,
-        Bid
+        Bid, Skill,
 
       ],
       autoLoadEntities: false,

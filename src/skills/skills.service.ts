@@ -2,7 +2,7 @@ import { Injectable, UseGuards } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Skill } from './entities/skill.entity';
+import { Skill } from './entities/skill.entity'; 
 import { Repository } from 'typeorm';
 import { JwtAuthGuard } from 'src/rbac/guards/auth.guard';
 import { RolesGuard } from 'src/rbac/guards/roles.guard';
@@ -13,8 +13,9 @@ import { Roles } from 'src/rbac/roles.decorator';
 export class SkillsService {
   constructor(@InjectRepository(Skill) private readonly skillRepository: Repository<Skill>) { }
 
-  create(createSkillDto: CreateSkillDto) {
-    return 'This action adds a new skill';
+  async create(dto: CreateSkillDto) {
+    const skill = this.skillRepository.create(dto);
+    return await this.skillRepository.save(skill)
   }
 
   async findAll() {
@@ -25,11 +26,16 @@ export class SkillsService {
     return `This action returns a #${id} skill`;
   }
 
-  update(id: number, updateSkillDto: UpdateSkillDto) {
-    return `This action updates a #${id} skill`;
+  async update(id: number, dto: UpdateSkillDto) {
+   const skill = await this.skillRepository.findOne({ where: { id } });
+
+   Object.assign(skill, dto);
+   return await this.skillRepository.save(skill);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} skill`;
+ async remove(id: number) {
+    const skill = await this.skillRepository.findOne({ where: { id } });
+
+    return await this.skillRepository.remove(skill);
   }
 }
