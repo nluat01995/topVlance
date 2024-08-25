@@ -96,7 +96,6 @@ export class PostProjectService {
   async getProjectList(limit, nextId) {
     try {
       const whereCondition = nextId ? { id: MoreThan(nextId) } : {};
-
       const projectList = (await this.postProjectRepository.find({
         where: whereCondition,
         order: { id: 'ASC' },

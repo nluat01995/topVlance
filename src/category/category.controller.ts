@@ -13,7 +13,6 @@ import { Roles } from 'src/rbac/roles.decorator';
 @ApiBearerAuth() // Indicates that Bearer Auth is required
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.FREELANCER)
-
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) { }
 
