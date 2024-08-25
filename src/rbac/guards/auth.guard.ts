@@ -25,19 +25,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (!requiredRoles) {
             return super.canActivate(context);
         }
-        // const request = context.switchToHttp().getRequest();
-        // const user = _.get(request, 'user', {});
-        // console.log(user);
-        // console.log(requiredRoles);
-
-
-        // const hasRole = requiredRoles.some((role) => _.get(user, 'role', []).includes(role));
-        // console.log(hasRole);
-
-        // if (!hasRole) {
-        //     return false;  // Có thể return false trực tiếp để ngăn việc gọi lại super.canActivate.
-        // }
-
         return super.canActivate(context);
     }
 }

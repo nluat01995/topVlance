@@ -9,13 +9,7 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-    if (isPublic) {
-      return true;
-    }
+
 
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
@@ -25,7 +19,6 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true; // If no roles are specified, allow access
     }
-    console.log(requiredRoles);
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
