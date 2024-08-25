@@ -29,6 +29,7 @@ export class AuthController {
   @Roles(Role.FREELANCER, Role.ADMIN) // Only Admin and SuperAdmin can access this route
   findAll(@Req() req: Request) {
 
+    console.log('dddddddd', _.get(req, 'user', null));
 
     return 'This route is only accessible by Admins and SuperAdmins';
   }

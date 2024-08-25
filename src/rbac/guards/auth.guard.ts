@@ -2,7 +2,7 @@ import { Injectable, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IS_PUBLIC_KEY, ROLES_KEY } from '../roles.decorator';
-
+import * as _ from 'lodash';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
     constructor(private reflector: Reflector) {
@@ -21,14 +21,23 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             context.getHandler(),
             context.getClass(),
         ]);
-        console.log(requiredRoles);
 
         if (!requiredRoles) {
             return super.canActivate(context);
         }
-        const { user } = context.switchToHttp().getRequest();
-        console.log(user);
+        // const request = context.switchToHttp().getRequest();
+        // const user = _.get(request, 'user', {});
+        // console.log(user);
+        // console.log(requiredRoles);
 
-        return super.canActivate(context) && requiredRoles.some((role) => user?.role?.includes(role));
+
+        // const hasRole = requiredRoles.some((role) => _.get(user, 'role', []).includes(role));
+        // console.log(hasRole);
+
+        // if (!hasRole) {
+        //     return false;  // Có thể return false trực tiếp để ngăn việc gọi lại super.canActivate.
+        // }
+
+        return super.canActivate(context);
     }
 }
