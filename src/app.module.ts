@@ -22,6 +22,7 @@ import { SkillsModule } from './skills/skills.module';
 import { TestModule } from './test/test.module';
 import { BidsModule } from './bids/bids.module';
 import { Bid } from './bids/entities/bid.entity';
+import { RolesGuard } from './rbac/guards/roles.guard';
 
 @Module({
   imports: [
