@@ -7,12 +7,16 @@ import { Between, MoreThan, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { Role } from 'src/rbac/enums/role.enum';
 import { PostProjectConstants } from './constants/post.constant';
+import { CategoryService } from 'src/category/category.service';
+import { SubCategoryService } from 'src/sub-category/sub-category.service';
 
 @Injectable()
 export class PostProjectService {
   constructor(
     @InjectRepository(PostProject) private readonly postProjectRepository: Repository<PostProject>,
-    private readonly userService: UsersService
+    private readonly userService: UsersService,
+    private readonly categoryService: CategoryService,
+    private readonly subCategoryService: SubCategoryService
 
   ) { }
   async countNewProjectsToday(): Promise<number> {
@@ -73,11 +77,15 @@ export class PostProjectService {
       message: PostProjectConstants.CREATE_SUCCESS.MESSAGE
     }
     try {
-      console.log(createPostProjectDto);
+      const { categoryId, subCategoryId } = createPostProjectDto;
 
+      const category = await this.categoryService.findOne(categoryId);
+      const subCategory = await this.subCategoryService.findOne(subCategoryId);
       const user = await this.userService.findOne(userId);
       const newProject = this.postProjectRepository.create({
         ...createPostProjectDto,
+        subCategory,
+        category,
         user
       })
       const project = await this.postProjectRepository.save(newProject);

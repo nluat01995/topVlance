@@ -1,8 +1,10 @@
+import { Category } from "@entities/category.entity"
+import { SubCategory } from "@entities/sub-category.entity"
 import { Bid } from "src/bids/entities/bid.entity"
 import { PaymentMethod } from "src/payment-method/entities/payment-method.entity"
 import { User } from "src/users/entities/user.entity"
 import { WorkForm } from "src/work-form/entities/work-form.entity"
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({ name: 'postProject' })
 export class PostProject extends BaseEntity {
@@ -51,4 +53,13 @@ export class PostProject extends BaseEntity {
 
     @OneToMany(() => Bid, bid => bid.postProject)
     bids: Bid[]
+
+
+    @ManyToOne(() => Category, category => category.posts)
+    @JoinColumn({ name: 'category_id' })
+    category: Category;
+
+    @ManyToOne(() => SubCategory, subCategory => subCategory.posts)
+    @JoinColumn({ name: 'sub_category_id' })
+    subCategory: SubCategory;
 }

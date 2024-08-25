@@ -6,9 +6,11 @@ import { PostProject } from './entities/post-project.entity';
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
 import { User } from 'src/users/entities/user.entity';
+import { CategoryModule } from 'src/category/category.module';
+import { SubCategoryModule } from 'src/sub-category/sub-category.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostProject]), UsersModule],
+  imports: [TypeOrmModule.forFeature([PostProject]), UsersModule, CategoryModule, SubCategoryModule],
   controllers: [PostProjectController],
   providers: [PostProjectService],
 })

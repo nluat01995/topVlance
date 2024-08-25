@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsDate, IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class BudgetDto {
     @IsDate()
@@ -55,6 +55,12 @@ export class CreatePostProjectDto {
     post_description: string
 
 
+
+    @IsInt()
+    categoryId: number;
+
+    @IsInt()
+    subCategoryId: number;
 
 }
 
