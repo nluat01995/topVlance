@@ -1,3 +1,4 @@
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
@@ -12,30 +13,44 @@ export class BudgetDto {
 }
 export class CreatePostProjectDto {
     @IsNumber()
+    @ApiPropertyOptional()
     Id_project: number
 
     @IsDate()
+    @ApiPropertyOptional()
+
     startTime: Date
 
     @IsDate()
+    @ApiPropertyOptional()
+
     expireTime: Date
 
     @IsNumber()
+    @ApiPropertyOptional()
     work_form_id: number
 
     @IsString()
+    @ApiPropertyOptional()
+
     @IsNotEmpty()
     address: string
 
     @IsNotEmpty()
+    @ApiPropertyOptional()
+
     @Type(() => BudgetDto) // Ensure correct transformation
     budget: BudgetDto;
 
     @IsString()
+    @ApiPropertyOptional()
+
     @IsNotEmpty()
     post_title: string
 
     @IsString()
+    @ApiPropertyOptional()
+
     @IsNotEmpty()
     post_description: string
 

@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('The topVlance api ')
     .setVersion('1.0')
     .addTag('TopVlanceVn')
+
     .build();
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),

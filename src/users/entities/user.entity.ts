@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Role } from 'src/rbac/enums/role.enum';
 import { BaseEntity } from '@entities/baseEntity/common.entities';
 import { PostProject } from 'src/post-project/entities/post-project.entity';
+import { Bid } from 'src/bids/entities/bid.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -45,5 +46,9 @@ export class User extends BaseEntity {
   }
   @OneToMany(() => PostProject, postProject => postProject.user)
   projects: PostProject[]
+
+  @OneToMany(() => Bid, bid => bid.user)
+  bids: Bid[]
+
 
 }

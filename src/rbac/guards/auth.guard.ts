@@ -21,10 +21,14 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             context.getHandler(),
             context.getClass(),
         ]);
+        console.log(requiredRoles);
+
         if (!requiredRoles) {
             return super.canActivate(context);
         }
         const { user } = context.switchToHttp().getRequest();
-        return super.canActivate(context) && requiredRoles.some((role) => user.roles?.includes(role));
+        console.log(user);
+
+        return super.canActivate(context) && requiredRoles.some((role) => user?.role?.includes(role));
     }
 }

@@ -1,7 +1,8 @@
+import { Bid } from "src/bids/entities/bid.entity"
 import { PaymentMethod } from "src/payment-method/entities/payment-method.entity"
 import { User } from "src/users/entities/user.entity"
 import { WorkForm } from "src/work-form/entities/work-form.entity"
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({ name: 'postProject' })
 export class PostProject extends BaseEntity {
@@ -47,4 +48,7 @@ export class PostProject extends BaseEntity {
 
     @ManyToOne(() => WorkForm, workform => workform.postProjects)
     workForm: WorkForm
+
+    @OneToMany(() => Bid, bid => bid.postProject)
+    bids: Bid[]
 }

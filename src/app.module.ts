@@ -20,6 +20,8 @@ import { PaymentMethod } from './payment-method/entities/payment-method.entity';
 import { WorkForm } from './work-form/entities/work-form.entity';
 import { SkillsModule } from './skills/skills.module';
 import { TestModule } from './test/test.module';
+import { BidsModule } from './bids/bids.module';
+import { Bid } from './bids/entities/bid.entity';
 
 @Module({
   imports: [
@@ -39,7 +41,8 @@ import { TestModule } from './test/test.module';
         SubCategory,
         PostProject,
         PaymentMethod,
-        WorkForm
+        WorkForm,
+        Bid
 
       ],
       autoLoadEntities: false,
@@ -50,7 +53,7 @@ import { TestModule } from './test/test.module';
     }),
     PaymentMethodModule,
     WorkFormModule,
-    AuthModule, UsersModule, CategoryModule, SubCategoryModule, PostProjectModule, SkillsModule, TestModule],
+    AuthModule, UsersModule, CategoryModule, SubCategoryModule, PostProjectModule, SkillsModule, TestModule, BidsModule],
   controllers: [AppController],
   providers: [
     AppService,

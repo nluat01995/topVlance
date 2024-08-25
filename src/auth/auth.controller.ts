@@ -28,6 +28,8 @@ export class AuthController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.FREELANCER, Role.ADMIN) // Only Admin and SuperAdmin can access this route
   findAll(@Req() req: Request) {
+
+
     return 'This route is only accessible by Admins and SuperAdmins';
   }
 
