@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Role } from 'src/rbac/enums/role.enum';
 import { BaseEntity } from '@entities/baseEntity/common.entities';
 import { PostProject } from 'src/post-project/entities/post-project.entity';

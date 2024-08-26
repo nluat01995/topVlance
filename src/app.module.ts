@@ -46,8 +46,8 @@ import { RolesGuard } from './rbac/guards/roles.guard';
         Bid
 
       ],
-      autoLoadEntities: false,
-      synchronize: false,
+      autoLoadEntities: true,
+      synchronize: true,
       logging: true,
       migrations: ['src/migration/*.ts'],
 

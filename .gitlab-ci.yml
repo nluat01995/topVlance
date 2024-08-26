@@ -1,0 +1,32 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  DB_HOST: 'db'
+  DB_PORT: '3306'
+  DB_USERNAME: 'root'
+  DB_PASSWORD: '123456'
+  DB_DATABASE: 'topvlance'
+  JWT_SECRET: 'pA@sss!!'
+
+build:
+  stage: build
+  image: node:18
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy:
+  stage: deploy
+  image: node:18
+  script:
+    - apt-get update && apt-get install -y sshpass
+    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$DEPLOY_HOST "mkdir -p /var/www/myapp"
+    - rsync -avz dist/ $SSH_USER@$DEPLOY_HOST:/var/www/myapp/
+    - sshpass -p "$SSH_PASSWORD" ssh $SSH_USER@$DEPLOY_HOST "cd /var/www/myapp && pm2 restart app"
+  only:
+    - main # Hoặc branch mà bạn muốn triển khai từ đó

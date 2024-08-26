@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PostProject } from './entities/post-project.entity';
 import { Between, MoreThan, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
-import { Role } from 'src/rbac/enums/role.enum';
 import { PostProjectConstants } from './constants/post.constant';
 import { CategoryService } from 'src/category/category.service';
 import { SubCategoryService } from 'src/sub-category/sub-category.service';
@@ -24,7 +23,7 @@ export class PostProjectService {
     today.setHours(0, 0, 0, 0);
     const count = await this.postProjectRepository.count({
       where: {
-        // createdAt: MoreThan(today),
+        createdAt: MoreThan(today),
       },
     });
     return count;
@@ -35,7 +34,7 @@ export class PostProjectService {
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     const count = await this.postProjectRepository.count({
       where: {
-        // createdAt: Between(sevenDaysAgo, new Date()),
+        createdAt: Between(sevenDaysAgo, new Date()),
       },
     });
     return count;
@@ -65,7 +64,7 @@ export class PostProjectService {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     const count = await this.postProjectRepository.count({
       where: {
-        // createdAt: Between(thirtyDaysAgo, new Date()),
+        createdAt: Between(thirtyDaysAgo, new Date()),
       },
     });
     return count;
